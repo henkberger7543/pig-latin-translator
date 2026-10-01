@@ -25,3 +25,10 @@ Every English class teaches a slightly different Pig Latin. This library picks o
 - `y` is a vowel only when it follows a consonant (`rhythm` → `ythmrhay`), and a consonant when it leads (`yellow` → `ellowyay`).
 - Non-alphabetic tokens — apostrophes, digits, hyphens — are passed through untouched, so `don't` stays `don't`.
 - Letter case in the body is preserved (`Hello` → `elloHay`); the suffix is always lowercase.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
